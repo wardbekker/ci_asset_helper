@@ -1,0 +1,12 @@
+{application, ci_asset_helper,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { ci_asset_helper_app, []}},
+  {env, []}
+ ]}.
