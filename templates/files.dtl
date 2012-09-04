@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>File Assets</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+    <body>
+        {% for file in files %}
+        <a href="/file/{{file}}">{{file}}</a>
+        {% endfor %}
+    </body>
+</html>
+

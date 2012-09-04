@@ -28,14 +28,19 @@ allowed_methods(ReqData, State) ->
     {['POST', 'GET'], ReqData, State}.
 
 to_html(ReqData, State) ->
-    Content = "list of build results",
+    StorePath = filename:join(
+                  [filename:dirname(code:which(?MODULE)), "..", ?STORE_PATH]
+                 ),
+    {ok, FileNames } = file:list_dir(StorePath),
+    Data = [{files, lists:sort(FileNames) }],
+    {ok, Content} = files_dtl:render(Data),
     {Content, ReqData, State}.
 
 process_post(ReqData, State) ->
     ContentType = wrq:get_req_header("content-type", ReqData),
     Boundary = string:substr(ContentType, string:str(ContentType, "boundary=") 
                              + length("boundary=")),
-    {FileName, FileSize, Content} = get_streamed_body(
+    {FileName, _FileSize, Content} = get_streamed_body(
                                       webmachine_multipart:stream_parts(
                                         wrq:stream_req_body(ReqData, 1024), 
                                         Boundary), [],[]),
